@@ -1,12 +1,11 @@
 import initGoogleMap from "./initGoogleMap.js";
 import { debounce } from "./helpers.js";
 
-export default ({ apiKey, zoom, mapStyle }) => ({
-    coordinates: [],
+export default ({ apiKey, zoom }) => ({
     apiKey: apiKey,
     zoom: zoom,
-    mapStyle: mapStyle,
 
+    coordinates: [],
     markers: [],
     google: null,
     map: null,
@@ -62,7 +61,6 @@ export default ({ apiKey, zoom, mapStyle }) => ({
             zoomControl: false,
             center: this.coordinates[0],
             zoom: this.zoom,
-            styles: this.mapStyle,
         });
     },
 
