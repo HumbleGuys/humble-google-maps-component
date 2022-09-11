@@ -49,8 +49,6 @@ export default ({ apiKey, zoom }) => ({
                 iconHeight: Number(marker.dataset.iconHeight),
             };
         });
-
-        console.log(this.coordinates);
     },
 
     createMap() {

@@ -48,7 +48,7 @@ const d = (s, i) => {
         iconWidth: Number(t.dataset.iconWidth),
         iconHeight: Number(t.dataset.iconHeight)
       };
-    }), console.log(this.coordinates);
+    });
   },
   createMap() {
     return new this.google.maps.Map(this.$el, {
