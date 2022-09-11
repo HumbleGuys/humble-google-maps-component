@@ -1,6 +1,6 @@
 {
   "src/resources/index.js": {
-    "file": "humble-google-translate-component.umd.js",
+    "file": "humble-google-maps-component.umd.js",
     "src": "src/resources/index.js",
     "isEntry": true
   },
