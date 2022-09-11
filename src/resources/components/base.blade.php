@@ -1,6 +1,16 @@
+@props([
+    'apiKey' => config('services.google_maps_api_key'),
+    'mapStyle' => [],
+    'zoom' => 10
+])
+
 <div 
-    x-data="googleMaps"
-    {{ $attributes }}
+    x-data="googleMaps({
+        mapStyle: {{ json_encode($mapStyle) }},
+        zoom: {{ json_encode($zoom) }},
+        apiKey: '{{ $apiKey }}'
+    })"
+    {{ $attributes->merge(['class' => 'googleMaps']) }}
 >
     {!! $slot !!}
 </div>
