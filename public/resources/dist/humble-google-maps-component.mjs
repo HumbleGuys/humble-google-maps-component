@@ -1,31 +1,32 @@
-const n = "gmapsCallback";
-let r = !1, l, c;
-const a = new Promise((s, i) => {
-  l = s, c = i;
+const s = "gmapsCallback";
+let a = !1, l, c;
+const r = new Promise((o, i) => {
+  l = o, c = i;
 });
-function h(s) {
-  if (r)
-    return a;
-  r = !0, window[n] = () => l(window.google);
+function h(o) {
+  if (a)
+    return r;
+  a = !0, window[s] = () => l(window.google);
   const i = document.createElement("script");
-  return i.async = !0, i.defer = !0, i.src = `https://maps.googleapis.com/maps/api/js?key=${s}&callback=${n}`, i.onerror = c, document.querySelector("head").appendChild(i), a;
+  return i.async = !0, i.defer = !0, i.src = `https://maps.googleapis.com/maps/api/js?key=${o}&callback=${s}`, i.onerror = c, document.querySelector("head").appendChild(i), r;
 }
-const d = (s, i) => {
+const d = (o, i) => {
   let e;
   return function(...t) {
     clearTimeout(e), e = setTimeout(
-      () => s.apply(this, t),
+      () => o.apply(this, t),
       i
     );
   };
-}, m = ({ apiKey: s, zoom: i }) => ({
-  apiKey: s,
+}, p = ({ apiKey: o, zoom: i }) => ({
+  apiKey: o,
   zoom: i,
   coordinates: [],
   markers: [],
   google: null,
   map: null,
   listenerHandler: null,
+  openInfoWindow: !1,
   async init() {
     this.google = await h(this.apiKey), this.initMap(), this.listenerHandler = this.google.maps.event.addDomListener(
       window,
@@ -41,12 +42,14 @@ const d = (s, i) => {
       this.$el.querySelectorAll(".googleMaps__marker")
     );
     this.coordinates = e.map(function(t) {
+      var n;
       return {
         lat: Number(t.dataset.lat),
         lng: Number(t.dataset.lng),
         icon: t.dataset.icon,
         iconWidth: Number(t.dataset.iconWidth),
-        iconHeight: Number(t.dataset.iconHeight)
+        iconHeight: Number(t.dataset.iconHeight),
+        infoWindow: (n = t.querySelector(".infoWindow")) == null ? void 0 : n.innerHTML
       };
     });
   },
@@ -61,12 +64,27 @@ const d = (s, i) => {
     });
   },
   createMarkers() {
-    return this.coordinates.map((e) => new this.google.maps.Marker({
-      position: e,
-      animation: this.google.maps.Animation.DROP,
-      map: this.map,
-      icon: this.getIcon(e)
-    }));
+    return this.coordinates.map((e) => {
+      const t = new this.google.maps.Marker({
+        position: e,
+        animation: this.google.maps.Animation.DROP,
+        map: this.map,
+        icon: this.getIcon(e)
+      });
+      return e.infoWindow && this.initInfoWindow(t, e.infoWindow), t;
+    });
+  },
+  initInfoWindow(e, t) {
+    const n = new google.maps.InfoWindow({
+      content: t
+    });
+    return e.addListener("click", () => {
+      this.openInfoWindow && this.openInfoWindow.close(), this.openInfoWindow = n, n.open({
+        anchor: e,
+        map: this.map,
+        shouldFocus: !1
+      });
+    }), e;
   },
   getIcon(e) {
     const t = this.getIconSize(e);
@@ -78,10 +96,10 @@ const d = (s, i) => {
   },
   getIconSize(e) {
     const t = window.innerWidth;
-    let o = 1;
-    return t < 600 ? o = 0.8 : t < 1030 && (o = 0.9), new this.google.maps.Size(
-      e.iconWidth * o,
-      e.iconHeight * o
+    let n = 1;
+    return t < 600 ? n = 0.8 : t < 1030 && (n = 0.9), new this.google.maps.Size(
+      e.iconWidth * n,
+      e.iconHeight * n
     );
   },
   fitAllMarkers() {
@@ -104,5 +122,5 @@ const d = (s, i) => {
   }
 });
 document.addEventListener("alpine:init", () => {
-  window.Alpine.data("googleMaps", m);
+  window.Alpine.data("googleMaps", p);
 });
