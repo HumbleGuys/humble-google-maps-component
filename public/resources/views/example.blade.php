@@ -1,6 +1,8 @@
 <x-layout>
     <div style="height: 80rem; width: 150rem; margin:auto; max-width:100%; position:relative">
-        <x-googleMaps::base>
+        <x-googleMaps::base 
+            map-style="lightGray"
+        >
             <x-googleMaps::marker
                 :lat="56.210120"
                 :lng="15.278090"

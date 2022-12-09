@@ -61,6 +61,7 @@ export default ({ apiKey, zoom }) => ({
             zoomControl: false,
             center: this.coordinates[0],
             zoom: this.zoom,
+            styles: window.googleMapsStyle,
         });
     },
 

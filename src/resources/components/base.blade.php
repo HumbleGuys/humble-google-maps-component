@@ -1,12 +1,15 @@
 @props([
     'apiKey' => config('services.google_maps_api_key'),
-    'zoom' => 10
+    'zoom' => 10,
+    'mapStyle' => null
 ])
+
+<x-googleMaps::mapStyles :map-style="$mapStyle" />
 
 <div 
     x-data="googleMaps({
         zoom: {{ json_encode($zoom) }},
-        apiKey: '{{ $apiKey }}'
+        apiKey: '{{ $apiKey }}',
     })"
     {{ $attributes->merge(['class' => 'googleMaps']) }}
 >
