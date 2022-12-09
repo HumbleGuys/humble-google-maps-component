@@ -7,7 +7,13 @@
                 :icon="asset('assets/map-pin.svg')"
                 :icon-width="48"
                 :icon-height="48"
-            />
+            >
+                <x-googleMaps::infoWindow>
+                    <div style="padding:1rem;font-size:2rem">
+                        Min info window
+                    </div>
+                </x-googleMaps::infoWindow>
+            </x-googleMaps::marker>
 
             <x-googleMaps::marker
                 :lat="56.200990"
@@ -15,7 +21,11 @@
                 :icon="asset('assets/map-pin-blue.svg')"
                 :icon-width="72"
                 :icon-height="72"
-            />
+            >
+                <x-googleMaps::infoWindow>
+                    Min andra info window
+                </x-googleMaps::infoWindow>
+            </x-googleMaps::marker>
 
             <x-googleMaps::marker
                 :lat="56.300990"
@@ -23,7 +33,11 @@
                 :icon="asset('assets/map-pin-red.svg')"
                 :icon-width="96"
                 :icon-height="96"
-            />
+            >
+                <x-googleMaps::infoWindow>
+                    Min tredje info window
+                </x-googleMaps::infoWindow>
+            </x-googleMaps::marker>
         </x-googleMaps::base>
     </div>
 </x-layout>

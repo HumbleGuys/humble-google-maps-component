@@ -6,12 +6,14 @@
     'iconHeight' => 24,
 ])
 
-<template
+<div
     class="googleMaps__marker"
     data-lat="{{ $lat }}"
     data-lng="{{ $lng }}"
     data-icon="{{ $icon }}"
     data-icon-width="{{ $iconWidth }}"
     data-icon-height="{{ $iconHeight }}"
+    style="display:none"
 >
-</template>
+    {!! $slot !!}
+</div>

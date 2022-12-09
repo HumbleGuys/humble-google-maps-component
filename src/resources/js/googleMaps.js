@@ -10,6 +10,7 @@ export default ({ apiKey, zoom }) => ({
     google: null,
     map: null,
     listenerHandler: null,
+    openInfoWindow: false,
 
     async init() {
         this.google = await initGoogleMap(this.apiKey);
@@ -47,6 +48,7 @@ export default ({ apiKey, zoom }) => ({
                 icon: marker.dataset.icon,
                 iconWidth: Number(marker.dataset.iconWidth),
                 iconHeight: Number(marker.dataset.iconHeight),
+                infoWindow: marker.querySelector(".infoWindow")?.innerHTML,
             };
         });
     },
@@ -71,8 +73,34 @@ export default ({ apiKey, zoom }) => ({
                 icon: this.getIcon(coordinate),
             });
 
+            if (coordinate.infoWindow) {
+                this.initInfoWindow(marker, coordinate.infoWindow);
+            }
+
             return marker;
         });
+    },
+
+    initInfoWindow(marker, content) {
+        const infoWindow = new google.maps.InfoWindow({
+            content: content,
+        });
+
+        marker.addListener("click", () => {
+            if (this.openInfoWindow) {
+                this.openInfoWindow.close();
+            }
+
+            this.openInfoWindow = infoWindow;
+
+            infoWindow.open({
+                anchor: marker,
+                map: this.map,
+                shouldFocus: false,
+            });
+        });
+
+        return marker;
     },
 
     getIcon(coordinate) {
