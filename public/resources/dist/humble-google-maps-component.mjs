@@ -60,7 +60,8 @@ const d = (o, i) => {
       fullscreenControl: !1,
       zoomControl: !1,
       center: this.coordinates[0],
-      zoom: this.zoom
+      zoom: this.zoom,
+      styles: window.googleMapsStyle
     });
   },
   createMarkers() {
